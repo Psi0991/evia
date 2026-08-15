@@ -1,0 +1,1 @@
+Only reality is real. It's a falsifiable statement (it's a universal exclusion that could be proven wrong with one counter example, essentially the entire history of philosophy has tried) that has a logically empty falsifier set. What's more interesting is what it forces to be true and what can't be true.
