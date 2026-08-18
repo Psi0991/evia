@@ -1,0 +1,32 @@
+{{!< default}}
+
+{{#post}}
+<article class="{{post_class}} post page">
+
+    {{#match @page.show_title_and_feature_image}}
+    <header class="post-head">
+        <div class="post-head-main post-head-solo">
+            <h1 class="post-title">{{title}}</h1>
+        </div>
+    </header>
+
+    {{#if feature_image}}
+    <figure class="post-feature">
+        <img
+            srcset="{{img_url feature_image size="m"}} 640w,
+                    {{img_url feature_image size="l"}} 1024w,
+                    {{img_url feature_image size="xl"}} 1600w"
+            sizes="(max-width: 1100px) 100vw, 1080px"
+            src="{{img_url feature_image size="xl"}}"
+            alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+        >
+    </figure>
+    {{/if}}
+    {{/match}}
+
+    <section class="gh-content gh-canvas">
+        {{content}}
+    </section>
+
+</article>
+{{/post}}

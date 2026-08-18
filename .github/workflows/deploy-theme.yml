@@ -1,0 +1,31 @@
+name: Deploy theme to Ghost
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "theme/**"
+      - "scripts/deploy-theme.js"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Validate theme (gscan)
+        run: npx gscan theme --fatal
+
+      - name: Upload & activate theme
+        run: node scripts/deploy-theme.js
+        env:
+          GHOST_URL: ${{ secrets.GHOST_URL }}
+          GHOST_ADMIN_API_KEY: ${{ secrets.GHOST_ADMIN_API_KEY }}

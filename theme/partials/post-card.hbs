@@ -1,0 +1,14 @@
+<article class="{{post_class}} card">
+    <aside class="margin-col" aria-hidden="false">
+        <time class="note" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+        {{#if primary_tag}}
+            <a class="note note-link" href="{{primary_tag.url}}">{{primary_tag.name}}</a>
+        {{/if}}
+        <span class="note note-dim">{{reading_time minute="1 min" minutes="% min"}}</span>
+        {{#if access}}{{else}}<span class="note note-lock">members</span>{{/if}}
+    </aside>
+    <div class="card-body">
+        <h2 class="card-title"><a href="{{url}}">{{title}}</a></h2>
+        <p class="card-excerpt">{{#if custom_excerpt}}{{custom_excerpt}}{{else}}{{excerpt words="34"}}{{/if}}</p>
+    </div>
+</article>

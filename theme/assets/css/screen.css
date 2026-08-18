@@ -1,0 +1,595 @@
+/* ==========================================================================
+   Marginalia — an editorial Ghost theme where the metadata lives in the margin
+   ==========================================================================
+
+   Tokens
+   -------------------------------------------------------------------------- */
+
+:root {
+    /* palette: cool chalk paper + blue-black ink; the accent color comes
+       from Ghost admin via --ghost-accent-color */
+    --paper: #F7F7F3;
+    --paper-2: #EDEDE7;
+    --ink: #191B1D;
+    --ink-2: #55595D;
+    --note: #7B7F81;
+    --rule: #DDDCD3;
+    --highlight: #F0E3AE;
+    --code-bg: #17191B;
+    --code-ink: #E9E8E3;
+
+    /* Fonts chosen in Ghost Admin → Design (--gh-font-*) win over the theme
+       defaults (Fraunces display / Newsreader body) */
+    --font-display-default: "Fraunces", Georgia, "Times New Roman", serif;
+    --font-body-default: "Newsreader", Georgia, "Times New Roman", serif;
+    --font-display: var(--gh-font-heading, var(--font-display-default));
+    --font-body: var(--gh-font-body, var(--font-body-default));
+    --font-note: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+
+    --measure: 680px;
+    --pad: clamp(1.25rem, 4vw, 2.5rem);
+    --margin-col: 170px;
+    --margin-gap: 44px;
+}
+
+@media (prefers-color-scheme: dark) {
+    body:not(.scheme-light) {
+        --paper: #141618;
+        --paper-2: #1C1F22;
+        --ink: #E9E8E3;
+        --ink-2: #A6A9AB;
+        --note: #85898B;
+        --rule: #2B2F32;
+        --highlight: #574B1F;
+        --code-bg: #0E1012;
+        --code-ink: #E9E8E3;
+    }
+}
+
+body.scheme-dark {
+    --paper: #141618;
+    --paper-2: #1C1F22;
+    --ink: #E9E8E3;
+    --ink-2: #A6A9AB;
+    --note: #85898B;
+    --rule: #2B2F32;
+    --highlight: #574B1F;
+    --code-bg: #0E1012;
+    --code-ink: #E9E8E3;
+}
+
+/* Base
+   -------------------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--highlight); color: var(--ink); }
+
+a { color: inherit; }
+
+img { max-width: 100%; height: auto; }
+
+:focus-visible {
+    outline: 2px solid var(--ghost-accent-color, var(--ink));
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* the annotation voice — used for every piece of metadata on the site */
+.note {
+    display: block;
+    font-family: var(--font-note);
+    font-size: 0.75rem;
+    letter-spacing: 0.01em;
+    line-height: 1.9;
+    color: var(--note);
+    text-decoration: none;
+}
+
+.note-dim { color: var(--note); opacity: 0.75; }
+
+.note-link { color: var(--ink-2); }
+.note-link:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--ghost-accent-color, currentColor);
+    text-underline-offset: 3px;
+}
+
+.note-lock::before { content: "🔒 "; font-size: 0.7em; }
+
+/* Layout shell
+   -------------------------------------------------------------------------- */
+
+.site {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 var(--pad);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.site-main { flex: 1; }
+
+/* Header
+   -------------------------------------------------------------------------- */
+
+.site-head {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--rule);
+}
+
+.site-brand {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+}
+
+.site-logo { display: block; max-height: 36px; width: auto; }
+
+.site-nav { margin-left: auto; }
+
+.site-nav .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.site-nav .nav a {
+    font-family: var(--font-note);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-2);
+    text-decoration: none;
+}
+
+.site-nav .nav a:hover,
+.site-nav .nav-current a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--ghost-accent-color, currentColor);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+}
+
+.site-actions { display: flex; align-items: center; gap: 0.9rem; }
+
+.search-toggle {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    color: var(--ink-2);
+    cursor: pointer;
+}
+
+.search-toggle:hover { color: var(--ink); background: var(--paper-2); }
+
+.btn {
+    display: inline-block;
+    font-family: var(--font-note);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    padding: 0.5em 1.1em;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.btn-subscribe {
+    background: var(--ghost-accent-color, var(--ink));
+    color: var(--paper);
+}
+
+.btn-subscribe:hover { filter: brightness(1.08); }
+
+/* Masthead
+   -------------------------------------------------------------------------- */
+
+.masthead {
+    padding: clamp(3rem, 8vw, 5.5rem) 0 clamp(1.5rem, 4vw, 2.5rem);
+    max-width: 46ch;
+}
+
+.masthead-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 6vw, 4.25rem);
+    font-weight: 560;
+    font-variation-settings: "opsz" 100;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+    margin: 0 0 0.5em;
+}
+
+.masthead-desc {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--ink-2);
+    margin: 0;
+}
+
+.masthead-desc a { text-decoration-color: var(--ghost-accent-color, currentColor); }
+
+.masthead-archive { padding-top: clamp(2.5rem, 6vw, 4rem); }
+
+.archive-kicker { margin: 0 0 0.75rem; }
+
+.error-page { padding-bottom: 6rem; }
+
+/* Feed — the margin grid
+   -------------------------------------------------------------------------- */
+
+.feed { padding: 1rem 0 3rem; }
+
+.card {
+    display: grid;
+    grid-template-columns: var(--margin-col) minmax(0, 1fr);
+    column-gap: var(--margin-gap);
+    padding: 2.1rem 0;
+}
+
+.card + .card { border-top: 1px solid var(--rule); }
+
+.margin-col { text-align: right; padding-top: 0.55rem; }
+
+.card-body { max-width: 62ch; }
+
+.card-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.45rem, 3vw, 1.8rem);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    margin: 0 0 0.45em;
+}
+
+.card-title a {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+    transition: text-decoration-color 0.15s ease;
+}
+
+.card-title a:hover { text-decoration-color: var(--ghost-accent-color, currentColor); }
+
+.card-excerpt {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--ink-2);
+}
+
+/* Pagination (Ghost {{pagination}} output)
+   -------------------------------------------------------------------------- */
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0 0 3.5rem;
+    font-family: var(--font-note);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-2);
+}
+
+.pagination a { text-decoration: none; color: var(--ink-2); }
+.pagination a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--ghost-accent-color, currentColor);
+    text-underline-offset: 4px;
+}
+
+/* Post
+   -------------------------------------------------------------------------- */
+
+.post-head {
+    display: grid;
+    grid-template-columns: var(--margin-col) minmax(0, 1fr);
+    column-gap: var(--margin-gap);
+    padding: clamp(2.5rem, 6vw, 4.5rem) 0 1.5rem;
+}
+
+.post-head .margin-col { padding-top: 0.9rem; }
+
+.post-head-main { max-width: 34ch; }
+
+.post-head-solo { grid-column: 1 / -1; max-width: none; }
+
+.post-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 5.2vw, 3.6rem);
+    font-weight: 580;
+    font-variation-settings: "opsz" 110;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin: 0 0 0.4em;
+}
+
+.post-subtitle {
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin: 0 0 0.9em;
+}
+
+.post-byline {
+    font-family: var(--font-note);
+    font-size: 0.75rem;
+    color: var(--note);
+    margin: 0;
+}
+
+.post-byline a { text-decoration: none; color: var(--ink-2); }
+.post-byline a:hover { text-decoration: underline; }
+
+.post-feature { margin: 1.25rem 0 2.75rem; }
+.post-feature img { display: block; width: 100%; border-radius: 3px; }
+
+.post-feature figcaption,
+.gh-content figcaption {
+    font-family: var(--font-note);
+    font-size: 0.72rem;
+    color: var(--note);
+    text-align: center;
+    padding-top: 0.7rem;
+    line-height: 1.6;
+}
+
+/* Content canvas — Koenig card breakouts
+   -------------------------------------------------------------------------- */
+
+.gh-canvas {
+    display: grid;
+    grid-template-columns:
+        [full-start] minmax(0, 1fr)
+        [wide-start] minmax(0, 110px)
+        [main-start] min(var(--measure), 100%)
+        [main-end] minmax(0, 110px)
+        [wide-end] minmax(0, 1fr)
+        [full-end];
+}
+
+.gh-canvas > * {
+    grid-column: main-start / main-end;
+    margin-top: 0;
+    margin-bottom: 1.25em;
+}
+
+.gh-canvas > .kg-width-wide { grid-column: wide-start / wide-end; }
+.gh-canvas > .kg-width-full { grid-column: full-start / full-end; }
+
+/* Content typography
+   -------------------------------------------------------------------------- */
+
+.gh-content {
+    font-size: 1.1875rem;
+    line-height: 1.78;
+    padding-bottom: 2rem;
+}
+
+.gh-content > h2,
+.gh-content > h3,
+.gh-content > h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    margin-top: 1.6em;
+    margin-bottom: 0.55em;
+}
+
+.gh-content > h2 { font-size: 1.85rem; font-weight: 600; }
+.gh-content > h3 { font-size: 1.4rem; font-weight: 600; }
+.gh-content > h4 { font-size: 1.15rem; font-weight: 600; }
+
+.gh-content a {
+    text-decoration: underline;
+    text-decoration-color: var(--ghost-accent-color, currentColor);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+}
+
+.gh-content a:hover { color: var(--ghost-accent-color, inherit); }
+
+.gh-content > blockquote {
+    font-style: italic;
+    font-size: 1.25rem;
+    padding-left: 1.4rem;
+    border-left: 2px solid var(--ghost-accent-color, var(--ink));
+    margin-left: 0;
+    margin-right: 0;
+    color: var(--ink-2);
+}
+
+/* section breaks become an asterism */
+.gh-content > hr {
+    border: 0;
+    margin: 2.2em 0;
+    text-align: center;
+}
+
+.gh-content > hr::after {
+    content: "⁂";
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--note);
+    letter-spacing: 0.4em;
+}
+
+.gh-content code {
+    font-family: var(--font-note);
+    font-size: 0.84em;
+    background: var(--paper-2);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+}
+
+.gh-content > pre,
+.gh-content .kg-code-card pre {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    border-radius: 8px;
+    padding: 1.2rem 1.4rem;
+    overflow-x: auto;
+    line-height: 1.65;
+}
+
+.gh-content pre code {
+    background: none;
+    padding: 0;
+    font-size: 0.86rem;
+    color: inherit;
+}
+
+.gh-content > ul,
+.gh-content > ol { padding-left: 1.4em; }
+
+.gh-content li { margin-bottom: 0.35em; }
+
+.gh-content img { border-radius: 3px; }
+
+.gh-content > table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.gh-content th,
+.gh-content td {
+    text-align: left;
+    padding: 0.55em 0.8em;
+    border-bottom: 1px solid var(--rule);
+}
+
+.gh-content th {
+    font-family: var(--font-note);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-2);
+}
+
+/* Post footer: CTA + comments
+   -------------------------------------------------------------------------- */
+
+.post-foot {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding-bottom: 3.5rem;
+}
+
+.cta {
+    background: var(--paper-2);
+    border-radius: 12px;
+    padding: 2rem clamp(1.4rem, 4vw, 2.4rem);
+    text-align: center;
+    margin: 1.5rem 0 2.5rem;
+}
+
+.cta-title {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.4em;
+}
+
+.cta-text {
+    color: var(--ink-2);
+    margin: 0 0 1.3em;
+    font-size: 1.02rem;
+}
+
+.post-comments { padding-top: 1rem; }
+
+/* Footer
+   -------------------------------------------------------------------------- */
+
+.site-foot {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    border-top: 1px solid var(--rule);
+    padding: 1.4rem 0 2rem;
+}
+
+.foot-note {
+    margin: 0;
+    font-family: var(--font-note);
+    font-size: 0.72rem;
+    color: var(--note);
+}
+
+.foot-note a { color: var(--note); text-decoration: none; }
+.foot-note a:hover { color: var(--ink); text-decoration: underline; }
+
+/* Responsive: the margin folds into a row of annotations above the text
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+    .card,
+    .post-head {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 0.4rem;
+    }
+
+    .margin-col {
+        text-align: left;
+        padding-top: 0;
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 1.1rem;
+    }
+
+    .post-head-main { max-width: none; }
+}
+
+@media (max-width: 620px) {
+    .site-head { flex-wrap: wrap; row-gap: 0.6rem; }
+    .site-nav { margin-left: 0; order: 3; flex-basis: 100%; }
+    .site-actions { margin-left: auto; }
+}
+
+/* Motion & preferences
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}

@@ -1,0 +1,19 @@
+{{!< default}}
+
+{{#tag}}
+<section class="masthead masthead-archive">
+    <p class="note archive-kicker">Tagged</p>
+    <h1 class="masthead-title">{{name}}</h1>
+    {{#if description}}
+        <p class="masthead-desc">{{description}}</p>
+    {{/if}}
+</section>
+{{/tag}}
+
+<section class="feed">
+    {{#foreach posts}}
+        {{> "post-card"}}
+    {{/foreach}}
+</section>
+
+{{pagination}}

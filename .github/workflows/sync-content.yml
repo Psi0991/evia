@@ -1,0 +1,46 @@
+name: Sync content to Ghost
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/**"
+      - "scripts/sync.js"
+  workflow_dispatch:
+    inputs:
+      prune:
+        description: "Delete #repo posts that were removed from the repo"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write # to commit the sync cache back
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Sync posts
+        run: node scripts/sync.js
+        env:
+          GHOST_URL: ${{ secrets.GHOST_URL }}
+          GHOST_ADMIN_API_KEY: ${{ secrets.GHOST_ADMIN_API_KEY }}
+          SYNC_PRUNE: ${{ github.event.inputs.prune || 'false' }}
+
+      # The cache lives at the repo root (outside content/**), so this commit
+      # does not re-trigger the workflow.
+      - name: Persist sync cache
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .sync-cache.json
+          git diff --staged --quiet || (git commit -m "chore: update sync cache [skip ci]" && git push)

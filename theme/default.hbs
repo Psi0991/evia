@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="{{@site.locale}}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{meta_title}}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{asset "css/screen.css"}}">
+
+    {{ghost_head}}
+</head>
+<body class="{{body_class}}{{#match @custom.color_scheme "Light"}} scheme-light{{/match}}{{#match @custom.color_scheme "Dark"}} scheme-dark{{/match}}">
+
+    <div class="site">
+
+        <header class="site-head">
+            <a class="site-brand" href="{{@site.url}}">
+                {{#if @site.logo}}
+                    <img class="site-logo" src="{{img_url @site.logo size="s"}}" alt="{{@site.title}}">
+                {{else}}
+                    {{@site.title}}
+                {{/if}}
+            </a>
+            <nav class="site-nav" aria-label="Main">
+                {{navigation}}
+            </nav>
+            <div class="site-actions">
+                <button class="search-toggle" data-ghost-search aria-label="Search">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg>
+                </button>
+                {{#if @site.members_enabled}}
+                    {{#unless @member}}
+                        <a class="btn btn-subscribe" href="#/portal/signup">Subscribe</a>
+                    {{else}}
+                        <a class="btn btn-subscribe" href="#/portal/account">Account</a>
+                    {{/unless}}
+                {{/if}}
+            </div>
+        </header>
+
+        <main class="site-main">
+            {{{body}}}
+        </main>
+
+        <footer class="site-foot">
+            <p class="foot-note">{{@site.title}} © {{date format="YYYY"}}</p>
+            <p class="foot-note"><a href="{{@site.url}}/rss/">RSS</a> · <a href="https://ghost.org" rel="noopener">Powered by Ghost</a></p>
+        </footer>
+
+    </div>
+
+    {{ghost_foot}}
+</body>
+</html>

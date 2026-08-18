@@ -1,0 +1,18 @@
+{{!< default}}
+
+{{#match pagination.page 1}}
+<section class="masthead">
+    <h1 class="masthead-title">{{@site.title}}</h1>
+    {{#if @site.description}}
+        <p class="masthead-desc">{{@site.description}}</p>
+    {{/if}}
+</section>
+{{/match}}
+
+<section class="feed">
+    {{#foreach posts}}
+        {{> "post-card"}}
+    {{/foreach}}
+</section>
+
+{{pagination}}

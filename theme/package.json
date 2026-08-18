@@ -1,0 +1,33 @@
+{
+  "name": "marginalia",
+  "description": "An editorial Ghost theme where the metadata lives in the margin.",
+  "version": "1.0.0",
+  "engines": {
+    "ghost": ">=5.0.0"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "You",
+    "email": "you@example.com"
+  },
+  "keywords": ["ghost", "ghost-theme"],
+  "config": {
+    "posts_per_page": 12,
+    "image_sizes": {
+      "xs": { "width": 160 },
+      "s": { "width": 320 },
+      "m": { "width": 640 },
+      "l": { "width": 1024 },
+      "xl": { "width": 1600 },
+      "xxl": { "width": 2400 }
+    },
+    "card_assets": true,
+    "custom": {
+      "color_scheme": {
+        "type": "select",
+        "options": ["System", "Light", "Dark"],
+        "default": "System"
+      }
+    }
+  }
+}
