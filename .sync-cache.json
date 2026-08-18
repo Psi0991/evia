@@ -1,4 +1,9 @@
 {
-  "images": {},
-  "posts": {}
+  "images": {
+    "content/images/example.png#ebd27cec9d": "https://storage.ghost.io/c/0d/fe/0dfeaa76-7c16-4278-9dbb-6a7f54c9108a/content/images/2026/08/example.png"
+  },
+  "posts": {
+    "only-reality-is-real": "4f3e4a5a9d",
+    "hello-world": "b1a3a24c3a"
+  }
 }
