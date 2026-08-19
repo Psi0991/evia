@@ -1,13 +1,13 @@
 {
-  "name": "marginalia",
-  "description": "An editorial Ghost theme where the metadata lives in the margin.",
-  "version": "1.0.0",
+  "name": "evia",
+  "description": "A celestial editorial Ghost theme: metadata as a star chart in the margin, the archive as a constellation.",
+  "version": "2.0.0",
   "engines": {
     "ghost": ">=5.0.0"
   },
   "license": "MIT",
   "author": {
-    "name": "You",
+    "name": "Evia",
     "email": "you@example.com"
   },
   "keywords": ["ghost", "ghost-theme"],
@@ -26,7 +26,13 @@
       "color_scheme": {
         "type": "select",
         "options": ["System", "Light", "Dark"],
-        "default": "System"
+        "default": "Dark"
+      },
+      "sky_texture": {
+        "type": "select",
+        "options": ["Starfield", "Plain"],
+        "default": "Starfield",
+        "description": "The fixed starfield behind the page. Only visible in dark mode."
       }
     }
   }

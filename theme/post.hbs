@@ -1,6 +1,8 @@
 {{!< default}}
 
 {{#post}}
+<div class="post-progress" aria-hidden="true"></div>
+
 <article class="{{post_class}} post">
 
     <header class="post-head">
@@ -48,8 +50,8 @@
         {{#if @site.members_enabled}}
             {{#unless @member}}
             <aside class="cta">
-                <h3 class="cta-title">Read this in your inbox</h3>
-                <p class="cta-text">New essays from {{@site.title}}, delivered as they're published. No noise in between.</p>
+                <h3 class="cta-title">Keep watching the sky</h3>
+                <p class="cta-text">New writing from {{@site.title}}, delivered as it's published. Nothing in between.</p>
                 <a class="btn btn-subscribe" href="#/portal/signup">Subscribe</a>
             </aside>
             {{/unless}}

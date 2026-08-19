@@ -7,7 +7,7 @@ Two GitHub workflows keep them in sync, one-way, repo → Ghost.
 ```
 content/posts/*.md     your writing (frontmatter + markdown)
 content/images/        local images, uploaded to Ghost's CDN on sync
-theme/                 "Marginalia" — the custom Ghost theme
+theme/                 "Evia" — the custom Ghost theme
 scripts/sync.js        markdown → Admin API upsert
 scripts/deploy-theme.js  zips + uploads + activates the theme
 .github/workflows/     runs both on push to main
@@ -70,13 +70,37 @@ To run locally instead: `GHOST_URL=... GHOST_ADMIN_API_KEY=... npm run sync`
 
 ## The theme
 
-`theme/` contains **Marginalia**, a Ghost 5/6 theme. Its signature: all metadata
-(dates, tags, reading time) is set as monospace annotations in a true margin
-column beside the text. Cool chalk-paper palette with dark mode, Fraunces for
-display type, Newsreader for body text, and full support for Koenig cards
-including wide/full-width breakouts. The accent color is whatever you set in
-Ghost Admin → Design (it flows in via `--ghost-accent-color`), and there's a
-theme setting to force light/dark or follow the system.
+`theme/` contains **Evia**, a Ghost 5/6 theme. Eve + Gaia — the eye that sees,
+and the whole it is looking at. It is night-first: a deep indigo ground under a
+fixed starfield the page scrolls in front of, with an aurora of the accent colour
+pooling above the masthead. Two structural ideas carry it:
+
+- **The margin is a star chart.** Dates, tags and reading time sit in a true
+  margin column in monospace, annotated beside the text rather than stacked
+  under the title.
+- **The archive is a constellation.** A hairline runs down the margin gutter of
+  the feed and every post is a node on it, lighting up on hover.
+
+Cormorant Garamond for display type, Newsreader for body, and full support for
+Koenig cards including wide/full-width breakouts. Section breaks are a star on
+the horizon; a scroll-progress line crosses the top of posts where the browser
+supports scroll-driven animations. The accent colour is whatever you set in
+Ghost Admin → Design (it flows in via `--ghost-accent-color`, falling back to
+iris blue).
+
+The palette runs on two colours, split by meaning: the **accent** marks structure
+and interaction (links, nav, the subscribe button, focus rings), and **amber gold**
+marks light and seeing (the mark's iris, the warm stars in the field, section
+breaks, quote bars, list markers, constellation nodes as they light up, and the
+warm end of the reading-progress line). Gold stays a decorative layer — titles,
+buttons and links all belong to the accent, so the accent set in Ghost Admin
+still drives everything interactive. Change gold by editing `--gold` /
+`--gold-soft` in `screen.css` — one pair per colour scheme, since daybreak needs
+a darker bronze to hold contrast.
+
+Two theme settings: `color_scheme` (System / Light / Dark, default
+**Dark**) and `sky_texture` (Starfield / Plain). The light palette is a pale
+daybreak sky with the stars switched off.
 
 Validate after editing: `npm run theme:check`. Deploys happen automatically on
 push, or manually with `npm run theme:deploy`.
