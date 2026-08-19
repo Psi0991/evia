@@ -321,6 +321,8 @@ img { max-width: 100%; height: auto; }
 .orb-ring { stroke: var(--gold); opacity: 0.9; }
 .orb-halo { stroke: var(--accent); opacity: 0.28; }
 .orb-pupil { fill: var(--starlight); }
+/* the instrument parts of the glyph belong to the Astrolabe variant */
+.orb-limb, .orb-alidade { display: none; }
 
 .site-brand:hover .orb-halo { opacity: 0.6; }
 .orb-halo { transition: opacity 0.3s ease; }
@@ -902,6 +904,244 @@ img { max-width: 100%; height: auto; }
 .foot-note a:hover { color: var(--starlight); text-decoration: underline; }
 
 .foot-sep { opacity: 0.5; padding: 0 0.35em; }
+
+/* ==========================================================================
+   The Astrolabe variant — chosen in Ghost Admin → Design → Theme settings.
+
+   Celestial is the sky itself. Astrolabe is the instrument built to read it,
+   and every element of the theme is re-cast as a part of that instrument:
+
+     · the ground is brass under lamplight, or vellum in daylight
+     · the sky layer stops being a field of stars and becomes the engraved
+       plate — almucantars, hour spokes, and the ecliptic riding off-centre
+     · the constellation line down the feed becomes the graduated limb, and
+       each post an index mark cut into it
+     · the mark grows a limb and an alidade, and its pupil reads as the pin
+
+   Only tokens and a handful of component overrides — the geometry, the
+   templates and the type pairings are untouched.
+   ========================================================================== */
+
+/* Lamplight on brass — the night instrument
+   -------------------------------------------------------------------------- */
+
+html.variant-astrolabe {
+    /* ground: a warm near-black, the colour of an unlit workshop */
+    --void: #0D0B08;
+    --void-2: #17130D;
+    --void-3: #221B12;
+
+    /* ink: vellum and tarnish rather than starlight */
+    --starlight: #F3E8D2;
+    --starlight-2: #C2AF8D;
+    --note: #8C7A5A;
+
+    --rule: #2F2617;
+    /* verdigris — the patina brass takes, and the natural foil to it */
+    --accent-fallback: #78C2AE;
+    /* gold becomes struck brass */
+    --gold: #D9A441;
+    --gold-soft: #EFCB86;
+    --highlight: #4A3612;
+    --code-bg: #080705;
+    --code-ink: #E6DCC6;
+
+    /* the engraved lines of the plate, in place of the star tokens */
+    --engrave: rgba(217, 164, 65, 0.15);
+    --engrave-faint: rgba(217, 164, 65, 0.085);
+    --engrave-ecliptic: rgba(120, 194, 174, 0.20);
+
+    --noise-opacity: 0.11;
+    --glow-strength: 20%;
+}
+
+/* Vellum — the same instrument in daylight */
+@media (prefers-color-scheme: light) {
+    html.variant-astrolabe:not(.scheme-dark) {
+        --void: #F2EAD7;
+        --void-2: #EAE0C9;
+        --void-3: #E0D4B8;
+        --starlight: #241B0F;
+        --starlight-2: #57482F;
+        --note: #7A6947;
+        --rule: #D6C8A8;
+        --accent-fallback: #1F6B5C;
+        --gold: #8A5F14;
+        --gold-soft: #A87C28;
+        --highlight: #E7D08A;
+        --code-bg: #241B0F;
+        --code-ink: #EFE5CE;
+        --engrave: rgba(66, 48, 20, 0.14);
+        --engrave-faint: rgba(66, 48, 20, 0.085);
+        --engrave-ecliptic: rgba(31, 107, 92, 0.22);
+        --noise-opacity: 0.09;
+        --glow-strength: 11%;
+    }
+}
+
+html.variant-astrolabe.scheme-light {
+    --void: #F2EAD7;
+    --void-2: #EAE0C9;
+    --void-3: #E0D4B8;
+    --starlight: #241B0F;
+    --starlight-2: #57482F;
+    --note: #7A6947;
+    --rule: #D6C8A8;
+    --accent-fallback: #1F6B5C;
+    --gold: #8A5F14;
+    --gold-soft: #A87C28;
+    --highlight: #E7D08A;
+    --code-bg: #241B0F;
+    --code-ink: #EFE5CE;
+    --engrave: rgba(66, 48, 20, 0.14);
+    --engrave-faint: rgba(66, 48, 20, 0.085);
+    --engrave-ecliptic: rgba(31, 107, 92, 0.22);
+    --noise-opacity: 0.09;
+    --glow-strength: 11%;
+}
+
+/* The plate — the sky layer, re-engraved
+   -------------------------------------------------------------------------- */
+
+/* Same fixed layer as the starfield, so `sky_texture: Plain` still switches
+   it off and the grain underneath is unaffected. The projection centre sits
+   above the masthead, where the aurora pools: the pole of the instrument. */
+html.variant-astrolabe body::before {
+    background-image:
+        /* the hour lines, radiating from the pole every 15° */
+        repeating-conic-gradient(
+            from -90deg at 50% -12vh,
+            var(--engrave-faint) 0deg 0.1deg,
+            transparent 0.1deg 15deg
+        ),
+        /* the almucantars — circles of equal altitude, cut every 96px */
+        repeating-radial-gradient(
+            circle at 50% -12vh,
+            transparent 0 95px,
+            var(--engrave) 95px 96px
+        ),
+        /* the ecliptic, which on a real rete is never concentric with them */
+        radial-gradient(
+            circle at 64% 30vh,
+            transparent 0 340px,
+            var(--engrave-ecliptic) 340px 341.5px,
+            transparent 341.5px
+        );
+    background-size: auto;
+    background-repeat: no-repeat;
+    /* the engraving fades down the page so it never competes with the text */
+    -webkit-mask-image: linear-gradient(to bottom, #000 0 45vh, rgba(0, 0, 0, 0.22) 105vh);
+    mask-image: linear-gradient(to bottom, #000 0 45vh, rgba(0, 0, 0, 0.22) 105vh);
+}
+
+/* The mark becomes the instrument
+   -------------------------------------------------------------------------- */
+
+html.variant-astrolabe .orb-halo { display: none; }
+
+html.variant-astrolabe .orb-limb {
+    display: inline;
+    stroke: var(--gold);
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+html.variant-astrolabe .orb-alidade {
+    display: inline;
+    stroke: var(--accent);
+    opacity: 0.85;
+    /* pin the rotation to the centre pin, in viewBox units */
+    transform-box: view-box;
+    transform-origin: 12px 12px;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.variant-astrolabe .orb-ring { stroke: var(--accent); opacity: 0.55; }
+
+/* sighting: the rule swings, the graduation lights up */
+html.variant-astrolabe .site-brand:hover .orb-alidade { transform: rotate(-24deg); }
+html.variant-astrolabe .site-brand:hover .orb-limb { opacity: 1; }
+
+/* The limb — the graduated scale down the archive
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 861px) {
+    /* the constellation thread is now the edge of the limb: even weight top
+       to bottom, the way a cast rim is, rather than fading at both ends */
+    html.variant-astrolabe .feed::before {
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            var(--rule) 3%,
+            var(--rule) 97%,
+            transparent
+        );
+    }
+
+    /* the graduation itself: a minor tick every 13px, a major every fifth */
+    html.variant-astrolabe .feed::after {
+        content: "";
+        position: absolute;
+        top: 1.5rem;
+        bottom: 3.5rem;
+        left: calc(var(--meridian) + 1.5px);
+        width: 9px;
+        pointer-events: none;
+        background-image:
+            repeating-linear-gradient(to bottom, var(--rule) 0 1px, transparent 1px 13px),
+            repeating-linear-gradient(to bottom, var(--note) 0 1px, transparent 1px 65px);
+        background-size: 4px 100%, 9px 100%;
+        background-repeat: no-repeat;
+        opacity: 0.75;
+    }
+
+    /* each post is an index mark cut into the scale, not a star on a line */
+    html.variant-astrolabe .card::before {
+        width: 8px;
+        height: 8px;
+        left: calc(var(--meridian) - 4px);
+        border-radius: 1px;
+        transform: rotate(45deg);
+    }
+
+    html.variant-astrolabe .card:hover::before {
+        box-shadow: 0 0 12px 0 color-mix(in oklab, var(--gold) 60%, transparent);
+    }
+}
+
+/* Section breaks — a graduated rule with the sun on it
+   -------------------------------------------------------------------------- */
+
+/* An astrolabe is set by putting the sun in its place on the ecliptic, so the
+   break in the text is that act: the rule, graduated, and the sun upon it. */
+html.variant-astrolabe .gh-content > hr {
+    height: 5px;
+    background-image:
+        linear-gradient(to right, transparent, var(--rule) 22%, var(--rule) 78%, transparent),
+        repeating-linear-gradient(to right, var(--rule) 0 1px, transparent 1px 11px);
+    background-size: 100% 1px, 100% 5px;
+    background-position: 0 0, 0 0;
+    background-repeat: no-repeat;
+}
+
+html.variant-astrolabe .gh-content > hr::after {
+    content: "☉";
+    transform: translateY(-60%);
+    font-size: 0.95rem;
+    opacity: 1;
+}
+
+/* Plate and rim — the surfaces that hold light
+   -------------------------------------------------------------------------- */
+
+/* brass has an edge; the cards and code blocks read as pieces of the plate */
+html.variant-astrolabe .cta {
+    border-radius: 10px;
+    box-shadow: inset 0 1px 0 0 color-mix(in oklab, var(--gold) 14%, transparent);
+}
+
+html.variant-astrolabe .post-feature img,
+html.variant-astrolabe .gh-content img { border-radius: 2px; }
 
 /* Responsive: the star chart folds into a row of annotations above the text
    -------------------------------------------------------------------------- */

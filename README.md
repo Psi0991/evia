@@ -73,13 +73,39 @@ To run locally instead: `GHOST_URL=... GHOST_ADMIN_API_KEY=... npm run sync`
 `theme/` contains **Evia**, a Ghost 5/6 theme. Eve + Gaia — the eye that sees,
 and the whole it is looking at. It is night-first: a deep indigo ground under a
 fixed starfield the page scrolls in front of, with an aurora of the accent colour
-pooling above the masthead. Two structural ideas carry it:
+pooling above the masthead. Two structural ideas carry it, and they survive
+both variants:
 
 - **The margin is a star chart.** Dates, tags and reading time sit in a true
   margin column in monospace, annotated beside the text rather than stacked
   under the title.
 - **The archive is a constellation.** A hairline runs down the margin gutter of
   the feed and every post is a node on it, lighting up on hover.
+
+### Two variants
+
+The `variant` setting picks which half of the idea the site wears.
+
+**Celestial** (default) is the sky itself: deep indigo, a fixed starfield, an
+aurora of the accent colour above the masthead, amber gold for light.
+
+**Astrolabe** is the instrument built to read that sky, and every element is
+re-cast as a part of it:
+
+| Celestial | Astrolabe |
+| --- | --- |
+| indigo void, amber gold | warm near-black under struck brass — or vellum in daylight |
+| iris blue accent fallback | verdigris, the patina brass takes |
+| a fixed field of stars | the engraved plate: almucantars every 96px, hour spokes every 15°, and the ecliptic riding off-centre as it must |
+| the constellation thread | the graduated limb — a minor tick every 13px, a major every fifth |
+| each post a star on the line | each post an index mark cut into the scale |
+| the mark is an eye | the mark grows a graduated limb and an alidade that swings on hover; the pupil reads as the pin |
+| section breaks are `✦` | section breaks are `☉` on a graduated rule — an astrolabe is set by putting the sun in its place |
+
+It is tokens and a handful of component overrides: geometry, templates and type
+pairings are untouched, so every other setting composes with it. `color_scheme`
+still gives Astrolabe a night and a day face, `sky_texture: Plain` still removes
+the plate, and all six type pairings still apply.
 
 Type is switchable from Ghost Admin → Design → Theme settings, via the
 `type_pairing` setting. Only the chosen pairing's fonts are downloaded:
@@ -115,8 +141,9 @@ still drives everything interactive. Change gold by editing `--gold` /
 `--gold-soft` in `screen.css` — one pair per colour scheme, since daybreak needs
 a darker bronze to hold contrast.
 
-Two theme settings: `color_scheme` (System / Light / Dark, default
-**Dark**) and `sky_texture` (Starfield / Plain).
+Three theme settings beyond type: `color_scheme` (System / Light / Dark,
+default **Dark**), `variant` (Celestial / Astrolabe, default **Celestial**) and
+`sky_texture` (Starfield / Plain).
 
 The light palette is a pale daybreak sky that prints the *same* starfield
 inverted — ink specks instead of light, the way an engraved star chart renders

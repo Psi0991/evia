@@ -1,7 +1,14 @@
 {{!-- The Evia mark: an eye that is also an orbit. Pupil, iris, halo —
-      seeing, and the whole being seen. Colours come from the CSS. --}}
+      seeing, and the whole being seen. Colours come from the CSS.
+
+      Under the Astrolabe variant the same glyph becomes the instrument: the
+      halo is replaced by a graduated limb, an alidade lies across it, and the
+      pupil reads as the pin the whole plate turns on. The extra parts are in
+      the markup always and shown by CSS, so there is no template branch. --}}
 <svg class="orb" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
     <circle class="orb-halo" cx="12" cy="12" r="10.5" stroke-width="1"/>
+    <circle class="orb-limb" cx="12" cy="12" r="10.5" stroke-width="1.1" stroke-dasharray="0.7 2.05"/>
     <circle class="orb-ring" cx="12" cy="12" r="6.5" stroke-width="1.25"/>
+    <line class="orb-alidade" x1="4.6" y1="19.4" x2="19.4" y2="4.6" stroke-width="1" stroke-linecap="round"/>
     <circle class="orb-pupil" cx="12" cy="12" r="2.4"/>
 </svg>

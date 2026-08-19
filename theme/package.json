@@ -1,7 +1,7 @@
 {
   "name": "evia",
-  "description": "A celestial editorial Ghost theme: metadata as a star chart in the margin, the archive as a constellation.",
-  "version": "2.0.0",
+  "description": "A celestial editorial Ghost theme: metadata as a star chart in the margin, the archive as a constellation, and an astrolabe variant of both.",
+  "version": "2.1.0",
   "engines": {
     "ghost": ">=5.0.0"
   },
@@ -47,6 +47,15 @@
         ],
         "default": "Dark"
       },
+      "variant": {
+        "type": "select",
+        "options": [
+          "Celestial",
+          "Astrolabe"
+        ],
+        "default": "Celestial",
+        "description": "The night sky itself, or the brass instrument built to read it."
+      },
       "sky_texture": {
         "type": "select",
         "options": [
@@ -54,7 +63,7 @@
           "Plain"
         ],
         "default": "Starfield",
-        "description": "Starfield behind the page \u2014 lit at night, inked in daybreak. Grain stays either way."
+        "description": "Sky behind the page: starfield, or the engraved rete under Astrolabe. Grain stays either way."
       },
       "type_pairing": {
         "type": "select",
