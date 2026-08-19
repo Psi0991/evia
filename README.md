@@ -116,8 +116,15 @@ still drives everything interactive. Change gold by editing `--gold` /
 a darker bronze to hold contrast.
 
 Two theme settings: `color_scheme` (System / Light / Dark, default
-**Dark**) and `sky_texture` (Starfield / Plain). The light palette is a pale
-daybreak sky with the stars switched off.
+**Dark**) and `sky_texture` (Starfield / Plain).
+
+The light palette is a pale daybreak sky that prints the *same* starfield
+inverted — ink specks instead of light, the way an engraved star chart renders
+it — so the star colours are tokens (`--star-1` … `--star-5`) rather than fixed
+values. Under both skies sits a grain layer: a tile of fractal noise generated
+by an SVG filter in a data URI, no image request and no script. It paints below
+the stars and the glow, so it reads as the texture of the ground rather than a
+film over the type. Tune it with `--noise-opacity`.
 
 Validate after editing: `npm run theme:check`. Deploys happen automatically on
 push, or manually with `npm run theme:deploy`.

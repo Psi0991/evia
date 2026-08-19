@@ -54,7 +54,7 @@
           "Plain"
         ],
         "default": "Starfield",
-        "description": "The fixed starfield behind the page. Only visible in dark mode."
+        "description": "Starfield behind the page \u2014 lit at night, inked in daybreak. Grain stays either way."
       },
       "type_pairing": {
         "type": "select",

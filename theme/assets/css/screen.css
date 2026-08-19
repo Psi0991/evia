@@ -33,7 +33,14 @@
     --code-bg: #070911;
     --code-ink: #DDE0EE;
 
+    /* night: warm and cool stars burning on the void */
+    --star-1: rgba(233, 234, 244, 0.55);
+    --star-2: rgba(233, 183, 92, 0.50);
+    --star-3: rgba(155, 180, 255, 0.42);
+    --star-4: rgba(233, 234, 244, 0.26);
+    --star-5: rgba(240, 206, 142, 0.34);
     --star-opacity: 1;
+    --noise-opacity: 0.055;
     --glow-strength: 26%;
 
     /* the accent set in Ghost Admin → Design wins; the fallback is iris blue */
@@ -82,7 +89,14 @@
         --highlight: #F6E3B4;
         --code-bg: #14172A;
         --code-ink: #E4E6F2;
-        --star-opacity: 0;
+        /* daybreak: the same field inverted, as an engraved star chart prints it */
+        --star-1: rgba(20, 23, 42, 0.30);
+        --star-2: rgba(124, 86, 14, 0.30);
+        --star-3: rgba(56, 74, 150, 0.26);
+        --star-4: rgba(20, 23, 42, 0.16);
+        --star-5: rgba(124, 86, 14, 0.20);
+        --star-opacity: 1;
+        --noise-opacity: 0.05;
         --glow-strength: 14%;
     }
 }
@@ -101,7 +115,14 @@ html.scheme-light {
     --highlight: #F6E3B4;
     --code-bg: #14172A;
     --code-ink: #E4E6F2;
-    --star-opacity: 0;
+    /* daybreak: the same field inverted, as an engraved star chart prints it */
+    --star-1: rgba(20, 23, 42, 0.30);
+    --star-2: rgba(124, 86, 14, 0.30);
+    --star-3: rgba(56, 74, 150, 0.26);
+    --star-4: rgba(20, 23, 42, 0.16);
+    --star-5: rgba(124, 86, 14, 0.20);
+    --star-opacity: 1;
+    --noise-opacity: 0.05;
     --glow-strength: 14%;
 }
 
@@ -183,9 +204,24 @@ body {
     text-rendering: optimizeLegibility;
 }
 
-/* The sky: a fixed starfield the page scrolls in front of. Four tiled
+/* Grain. A tile of fractal noise rendered by an SVG filter in a data URI —
+   no image request, no script. It sits below the starfield and the glow, so
+   it reads as the texture of the ground rather than a film over the type. */
+html::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: var(--noise-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+}
+
+/* The sky: a fixed starfield the page scrolls in front of. Five tiled
    radial-gradients at different periods read as a random field, and cost
-   nothing — no images, no script. */
+   nothing — no images, no script. The colours are tokens, so daybreak
+   prints the same field in ink instead of light. */
 body::before {
     content: "";
     position: fixed;
@@ -194,11 +230,11 @@ body::before {
     pointer-events: none;
     opacity: var(--star-opacity);
     background-image:
-        radial-gradient(1.4px 1.4px at 32px 44px, rgba(233, 234, 244, 0.55), transparent 100%),
-        radial-gradient(1.2px 1.2px at 148px 96px, rgba(233, 183, 92, 0.5), transparent 100%),
-        radial-gradient(1.6px 1.6px at 90px 210px, rgba(155, 180, 255, 0.42), transparent 100%),
-        radial-gradient(1px 1px at 220px 160px, rgba(233, 234, 244, 0.26), transparent 100%),
-        radial-gradient(2px 2px at 300px 330px, rgba(240, 206, 142, 0.34), transparent 100%);
+        radial-gradient(1.4px 1.4px at 32px 44px, var(--star-1), transparent 100%),
+        radial-gradient(1.2px 1.2px at 148px 96px, var(--star-2), transparent 100%),
+        radial-gradient(1.6px 1.6px at 90px 210px, var(--star-3), transparent 100%),
+        radial-gradient(1px 1px at 220px 160px, var(--star-4), transparent 100%),
+        radial-gradient(2px 2px at 300px 330px, var(--star-5), transparent 100%);
     background-size: 260px 260px, 190px 190px, 340px 340px, 150px 150px, 430px 430px;
     transition: opacity 0.4s ease;
 }
