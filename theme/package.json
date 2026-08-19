@@ -1,32 +1,73 @@
 {
-  "name": "marginalia",
-  "description": "An editorial Ghost theme where the metadata lives in the margin.",
-  "version": "1.0.0",
+  "name": "evia",
+  "description": "A celestial editorial Ghost theme: metadata as a star chart in the margin, the archive as a constellation.",
+  "version": "2.0.0",
   "engines": {
     "ghost": ">=5.0.0"
   },
   "license": "MIT",
   "author": {
-    "name": "You",
+    "name": "Evia",
     "email": "you@example.com"
   },
-  "keywords": ["ghost", "ghost-theme"],
+  "keywords": [
+    "ghost",
+    "ghost-theme"
+  ],
   "config": {
     "posts_per_page": 12,
     "image_sizes": {
-      "xs": { "width": 160 },
-      "s": { "width": 320 },
-      "m": { "width": 640 },
-      "l": { "width": 1024 },
-      "xl": { "width": 1600 },
-      "xxl": { "width": 2400 }
+      "xs": {
+        "width": 160
+      },
+      "s": {
+        "width": 320
+      },
+      "m": {
+        "width": 640
+      },
+      "l": {
+        "width": 1024
+      },
+      "xl": {
+        "width": 1600
+      },
+      "xxl": {
+        "width": 2400
+      }
     },
     "card_assets": true,
     "custom": {
       "color_scheme": {
         "type": "select",
-        "options": ["System", "Light", "Dark"],
-        "default": "System"
+        "options": [
+          "System",
+          "Light",
+          "Dark"
+        ],
+        "default": "Dark"
+      },
+      "sky_texture": {
+        "type": "select",
+        "options": [
+          "Starfield",
+          "Plain"
+        ],
+        "default": "Starfield",
+        "description": "Starfield behind the page \u2014 lit at night, inked in daybreak. Grain stays either way."
+      },
+      "type_pairing": {
+        "type": "select",
+        "options": [
+          "Marcellus / Literata",
+          "Cormorant Garamond / Newsreader",
+          "Bodoni Moda / Literata",
+          "Marcellus / Alegreya",
+          "Instrument Serif / Public Sans",
+          "Fraunces / Spectral"
+        ],
+        "default": "Marcellus / Literata",
+        "description": "Display face / body face. Only the chosen pairing is downloaded."
       }
     }
   }

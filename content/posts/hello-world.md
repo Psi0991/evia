@@ -19,7 +19,7 @@ visibility: public # public | members | paid
 
 This post lives in a git repository. When it lands on `main`, a workflow converts
 it to HTML, pushes it through Ghost's Admin API, and Ghost renders it with the
-Marginalia theme — date and tags out in the margin, where annotations belong.
+Evia theme — date and tags out in the margin, where annotations belong.
 
 ## What works out of the box
 
