@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{@site.locale}}" class="{{#match @custom.color_scheme "Light"}}scheme-light{{/match}}{{#match @custom.color_scheme "Dark"}}scheme-dark{{/match}}">
+<html lang="{{@site.locale}}" class="{{#match @custom.color_scheme "Light"}}scheme-light{{/match}}{{#match @custom.color_scheme "Dark"}}scheme-dark{{/match}}{{#match @custom.type_pairing "Cormorant Garamond / Newsreader"}} type-cormorant{{/match}}{{#match @custom.type_pairing "Bodoni Moda / Literata"}} type-bodoni{{/match}}{{#match @custom.type_pairing "Marcellus / Alegreya"}} type-marcellus-alegreya{{/match}}{{#match @custom.type_pairing "Instrument Serif / Public Sans"}} type-instrument{{/match}}{{#match @custom.type_pairing "Fraunces / Spectral"}} type-fraunces{{/match}}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +7,20 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" rel="stylesheet">
+    {{!-- only the selected pairing's fonts are fetched --}}
+    {{#match @custom.type_pairing "Cormorant Garamond / Newsreader"}}
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" rel="stylesheet">
+    {{else match @custom.type_pairing "Bodoni Moda / Literata"}}
+        <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&display=swap" rel="stylesheet">
+    {{else match @custom.type_pairing "Marcellus / Alegreya"}}
+        <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Alegreya:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    {{else match @custom.type_pairing "Instrument Serif / Public Sans"}}
+        <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    {{else match @custom.type_pairing "Fraunces / Spectral"}}
+        <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Spectral:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    {{else}}
+        <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&display=swap" rel="stylesheet">
+    {{/match}}
 
     <link rel="stylesheet" href="{{asset "css/screen.css"}}">
 

@@ -40,12 +40,23 @@
     --accent: var(--ghost-accent-color, var(--accent-fallback));
 
     /* Fonts chosen in Ghost Admin → Design (--gh-font-*) win over the theme
-       defaults (Cormorant Garamond display / Newsreader body) */
-    --font-display-default: "Cormorant Garamond", Georgia, "Times New Roman", serif;
-    --font-body-default: "Newsreader", Georgia, "Times New Roman", serif;
+       defaults (Marcellus display / Literata body) */
+    --font-display-default: "Marcellus", Trajan, Georgia, serif;
+    --font-body-default: "Literata", Georgia, "Times New Roman", serif;
     --font-display: var(--gh-font-heading, var(--font-display-default));
     --font-body: var(--gh-font-body, var(--font-body-default));
     --font-note: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+
+    /* Type tuning. Each pairing sets these, because one scale cannot flatter
+       every face: Marcellus and Instrument Serif ship a single weight and run
+       large, Bodoni's contrast wants a hair less tracking, Fraunces sets big.
+       Marcellus has exactly one weight — pinning both display weights to 400
+       stops the browser synthesising a fake bold on an inscriptional face. */
+    --display-weight-1: 400;
+    --display-weight-2: 400;
+    --display-tracking: 0.004em;
+    --display-scale: 0.92;
+    --body-scale: 0.95;
 
     --measure: 680px;
     --pad: clamp(1.25rem, 4vw, 2.5rem);
@@ -92,6 +103,63 @@ html.scheme-light {
     --code-ink: #E4E6F2;
     --star-opacity: 0;
     --glow-strength: 14%;
+}
+
+/* Type pairings — chosen in Ghost Admin → Design → Theme settings.
+   The default (Marcellus / Literata) lives in the token block above; each
+   alternative swaps the two families and re-tunes the scale.
+   default.hbs loads only the selected pairing's fonts.
+   -------------------------------------------------------------------------- */
+
+/* high-contrast and ethereal; the thin strokes sparkle at display sizes */
+html.type-cormorant {
+    --font-display-default: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --font-body-default: "Newsreader", Georgia, "Times New Roman", serif;
+    --display-weight-1: 500;
+    --display-weight-2: 600;
+    --display-tracking: -0.005em;
+    --display-scale: 1;
+    --body-scale: 1;
+}
+
+/* engraved star-atlas contrast, on a face built for long reading */
+html.type-bodoni {
+    --font-display-default: "Bodoni Moda", Didot, Georgia, serif;
+    --font-body-default: "Literata", Georgia, "Times New Roman", serif;
+    --display-weight-1: 500;
+    --display-weight-2: 600;
+    --display-tracking: -0.012em;
+    --display-scale: 0.96;
+    --body-scale: 0.95;
+}
+
+/* the same inscriptional display over a warmer, more humanist body */
+html.type-marcellus-alegreya {
+    --font-body-default: "Alegreya", Georgia, "Times New Roman", serif;
+    --body-scale: 0.99;
+}
+
+/* tight modern editorial: serif headline, neutral sans text */
+html.type-instrument {
+    --font-display-default: "Instrument Serif", Georgia, serif;
+    --font-body-default: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+    /* also a single-weight display face */
+    --display-weight-1: 400;
+    --display-weight-2: 400;
+    --display-tracking: -0.014em;
+    --display-scale: 1.02;
+    --body-scale: 0.93;
+}
+
+/* the original Marginalia voice: warm, slightly wonky, sturdy underneath */
+html.type-fraunces {
+    --font-display-default: "Fraunces", Georgia, serif;
+    --font-body-default: "Spectral", Georgia, "Times New Roman", serif;
+    --display-weight-1: 560;
+    --display-weight-2: 620;
+    --display-tracking: -0.018em;
+    --display-scale: 0.9;
+    --body-scale: 0.97;
 }
 
 /* Base
@@ -238,7 +306,7 @@ img { max-width: 100%; height: auto; }
     gap: 0.6rem;
     font-family: var(--font-display);
     font-size: 1.45rem;
-    font-weight: 600;
+    font-weight: var(--display-weight-2);
     text-decoration: none;
     letter-spacing: 0.01em;
 }
@@ -327,9 +395,9 @@ img { max-width: 100%; height: auto; }
 
 .masthead-title {
     font-family: var(--font-display);
-    font-size: clamp(2.9rem, 7.5vw, 5.25rem);
-    font-weight: 500;
-    letter-spacing: -0.005em;
+    font-size: calc(clamp(2.9rem, 7.5vw, 5.25rem) * var(--display-scale));
+    font-weight: var(--display-weight-1);
+    letter-spacing: var(--display-tracking);
     line-height: 1.02;
     margin: 0 0 0.32em;
 }
@@ -373,9 +441,9 @@ img { max-width: 100%; height: auto; }
 
 .card-title {
     font-family: var(--font-display);
-    font-size: clamp(1.7rem, 3.4vw, 2.15rem);
-    font-weight: 600;
-    letter-spacing: -0.005em;
+    font-size: calc(clamp(1.7rem, 3.4vw, 2.15rem) * var(--display-scale));
+    font-weight: var(--display-weight-2);
+    letter-spacing: var(--display-tracking);
     line-height: 1.14;
     margin: 0 0 0.35em;
 }
@@ -510,9 +578,9 @@ img { max-width: 100%; height: auto; }
 
 .post-title {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 6.2vw, 4.4rem);
-    font-weight: 500;
-    letter-spacing: -0.005em;
+    font-size: calc(clamp(2.5rem, 6.2vw, 4.4rem) * var(--display-scale));
+    font-weight: var(--display-weight-1);
+    letter-spacing: var(--display-tracking);
     line-height: 1.04;
     margin: 0 0 0.3em;
 }
@@ -583,7 +651,7 @@ img { max-width: 100%; height: auto; }
    -------------------------------------------------------------------------- */
 
 .gh-content {
-    font-size: 1.1875rem;
+    font-size: calc(1.1875rem * var(--body-scale));
     line-height: 1.78;
     padding-bottom: 2rem;
     color: var(--starlight);
@@ -593,15 +661,15 @@ img { max-width: 100%; height: auto; }
 .gh-content > h3,
 .gh-content > h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.005em;
+    letter-spacing: var(--display-tracking);
     line-height: 1.16;
     margin-top: 1.7em;
     margin-bottom: 0.5em;
 }
 
-.gh-content > h2 { font-size: 2.1rem; font-weight: 600; }
-.gh-content > h3 { font-size: 1.6rem; font-weight: 600; }
-.gh-content > h4 { font-size: 1.25rem; font-weight: 700; }
+.gh-content > h2 { font-size: calc(2.1rem * var(--display-scale)); font-weight: var(--display-weight-2); }
+.gh-content > h3 { font-size: calc(1.6rem * var(--display-scale)); font-weight: var(--display-weight-2); }
+.gh-content > h4 { font-size: calc(1.25rem * var(--display-scale)); font-weight: var(--display-weight-2); }
 
 .gh-content a {
     text-decoration: underline;
@@ -759,9 +827,9 @@ img { max-width: 100%; height: auto; }
 
 .cta-title {
     font-family: var(--font-display);
-    font-size: 1.75rem;
-    font-weight: 600;
-    letter-spacing: -0.005em;
+    font-size: calc(1.75rem * var(--display-scale));
+    font-weight: var(--display-weight-2);
+    letter-spacing: var(--display-tracking);
     margin: 0 0 0.35em;
 }
 

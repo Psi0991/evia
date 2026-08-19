@@ -81,8 +81,25 @@ pooling above the masthead. Two structural ideas carry it:
 - **The archive is a constellation.** A hairline runs down the margin gutter of
   the feed and every post is a node on it, lighting up on hover.
 
-Cormorant Garamond for display type, Newsreader for body, and full support for
-Koenig cards including wide/full-width breakouts. Section breaks are a star on
+Type is switchable from Ghost Admin → Design → Theme settings, via the
+`type_pairing` setting. Only the chosen pairing's fonts are downloaded:
+
+| Pairing | Character |
+| --- | --- |
+| **Marcellus / Literata** (default) | Roman inscription — the lettering of an old celestial globe — over a face engineered for screen reading |
+| **Cormorant Garamond / Newsreader** | high-contrast and ethereal; the thin strokes sparkle at display sizes |
+| **Bodoni Moda / Literata** | engraved star-atlas contrast, on a face built for long reading |
+| **Marcellus / Alegreya** | the same inscriptional display over a warmer, more humanist body |
+| **Instrument Serif / Public Sans** | tight modern editorial: serif headline, neutral sans text |
+| **Fraunces / Spectral** | the original Marginalia voice — warm, slightly wonky, sturdy underneath |
+
+One type scale cannot flatter every face, so each pairing also sets
+`--display-weight-1/-2`, `--display-tracking`, `--display-scale` and
+`--body-scale`. Marcellus and Instrument Serif ship a single weight, and the
+display weights are pinned to 400 for both so browsers never synthesise a fake
+bold — on an inscriptional face like Marcellus a synthetic bold looks smeared.
+
+Full support for Koenig cards including wide/full-width breakouts. Section breaks are a star on
 the horizon; a scroll-progress line crosses the top of posts where the browser
 supports scroll-driven animations. The accent colour is whatever you set in
 Ghost Admin → Design (it flows in via `--ghost-accent-color`, falling back to
